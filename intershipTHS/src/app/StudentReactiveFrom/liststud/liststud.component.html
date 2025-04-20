@@ -4,7 +4,7 @@
   <div>
     <p class="text-xl font-bold mb-4">Student List Using Reactive Form</p>
 
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" routerLink="/studadd">
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" routerLink="/r-addstud">
       Add Student
     </button>
   </div>
@@ -16,6 +16,7 @@
           <th class="py-2 px-4 border-r">Id</th>
           <th class="py-2 px-4 border-r">Name</th>
           <th class="py-2 px-4 border-r">Age</th>
+          <th class="py-2 px-4 border-r">Department</th>
           <th class="py-2 px-4 border-r">Delete</th>
           <th class="py-2 px-4 border-r">Update</th>
         </tr>
@@ -31,6 +32,11 @@
           <td class="py-2 px-4 border-r" style="text-align: center">
             {{ student.age }}
           </td>
+
+          <td class="py-2 px-4 border-r" style="text-align: center"> 
+            {{ student.department ? student.department.name : '' }}
+
+          </td> 
           <td class="py-2 px-4 border-r" style="text-align: center">
             <button (click)="delete(student.id)"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">

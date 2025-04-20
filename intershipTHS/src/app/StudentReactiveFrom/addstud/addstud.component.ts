@@ -3,6 +3,8 @@ import { Student } from '../../Classes/student';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../../Services/student.service';
 import { Router } from '@angular/router';
+import { DepartmentService } from '../../Services/department.service';
+import { Department } from '../../Classes/department';
 
 @Component({
   selector: 'app-addstud',
@@ -11,11 +13,13 @@ import { Router } from '@angular/router';
 })
   export class AddstudComponent  implements OnInit {
 student: Student = new Student();
+departments: Department[] = [];
   // regForm!: any;
   regForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private studentService: StudentService,
+    private departmentService: DepartmentService,
     private router: Router,
   ) {}
 ngOnInit() {
@@ -23,8 +27,12 @@ ngOnInit() {
     id: [this.student.id, Validators.required],
     name: [this.student.name, Validators.required],
     age: [this.student.age, Validators.required],
+    department: [this.student.department, Validators.required],
     });
 
+
+
+    this.getDepartments();
   }
 
 
@@ -38,8 +46,13 @@ ngOnInit() {
  
 
   saveStudent() {
+    // const deptId = this.regForm.value.department;
     this.student = { 
       ...this.regForm.value, 
+      // department: deptId ? { id: deptId } : null,
+      department: this.regForm.value.department ? { id: this.regForm.value.department } : null
+      
+
     };
   
     console.log('Payload:', this.student);
@@ -58,7 +71,15 @@ ngOnInit() {
   }
 
 
+// Depatment
 
+getDepartments() {
+  this.departmentService.getDepartmentList().subscribe(data => {
+    // console.log(data);
+    this.departments = data;
+
+  });
+}
 
 
 

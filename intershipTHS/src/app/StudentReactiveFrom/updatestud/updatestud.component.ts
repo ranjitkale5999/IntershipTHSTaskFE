@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../../Services/student.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Student } from '../../Classes/student';
+import { Department } from '../../Classes/department';
+import { DepartmentService } from '../../Services/department.service';
 
 @Component({
   selector: 'app-updatestud',
@@ -13,10 +15,12 @@ export class UpdatestudComponent {
   id: number = 0;
   regForm!: FormGroup;
   student: Student = new Student();
+  departments: Department[] = [];
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private studentService: StudentService,
+    private departmentService: DepartmentService,
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) { }
@@ -26,6 +30,7 @@ export class UpdatestudComponent {
       id: ['', Validators.required],
       name: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(1)]],
+      department: [this.student.department, Validators.required],
     });
 
     this.studentService.getStudentById(this.id).subscribe(data => {
@@ -35,9 +40,13 @@ export class UpdatestudComponent {
         id: this.student.id,
         name: this.student.name,
         age: this.student.age,
+        // department: this.student.department.id,
+        department: this.student.department ? this.student.department.id : null
+        
       });
     });
-
+    
+    this.getDepartments();
   }
 
   reset() {
@@ -53,6 +62,7 @@ export class UpdatestudComponent {
       // alert(JSON.stringify(this.student));
       const updatedStudent: Student = {
         ...formdata.value,
+        department: this.regForm.value.department ? { id: this.regForm.value.department } : null
       };
       this.student = updatedStudent;
       this.studentService.updateStudent(this.id, this.student).subscribe(
@@ -70,6 +80,18 @@ export class UpdatestudComponent {
   goToStudent() {
     this.router.navigate(['/home']);
   }
+
+  
+// Depatment
+
+getDepartments() {
+  this.departmentService.getDepartmentList().subscribe(data => {
+    console.log(data);
+    this.departments = data;
+
+  });
+
+}
 
 }
 

@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ListstudComponent } from './StudentReactiveFrom/liststud/liststud.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UpdatestudComponent } from './StudentReactiveFrom/updatestud/updatestud.component';
-
+import {NgSelectModule }  from '@ng-select/ng-select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +21,7 @@ import { UpdatestudComponent } from './StudentReactiveFrom/updatestud/updatestud
     AppRoutingModule,
     ReactiveFormsModule ,
     HttpClientModule, 
+    NgSelectModule ,
   ],
   providers: [],
   bootstrap: [AppComponent]
