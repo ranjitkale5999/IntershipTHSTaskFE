@@ -1,4 +1,28 @@
-<div>
+<!-- <div>
   <h1 class="text-3xl font-bold underline text-center">Welcome to the Internship THS!</h1>
   
+</div> -->
+
+<nav class="bg-blue-500 p-4">
+  <ul class="flex space-x-4">
+    <li>
+      <a routerLink="home" routerLinkActive="active" class="text-white hover:text-gray-200">home</a>
+    </li>
+    <li>
+      <a routerLink="r-addstud" routerLinkActive="active" class="text-white hover:text-gray-200">ADD Students</a>
+    </li>
+    <li>
+      <a routerLink="studrective" routerLinkActive="active" class="text-white hover:text-gray-200">Reactiveform-Student</a>
+    </li>
+  </ul>
+</nav>
+
+<!-- <h1 class="text-center text-3xl my-4">{{title}}</h1> -->
+<div class="container mx-auto">
+  <router-outlet></router-outlet>
 </div>
+<footer class="footer bg-gray-800 text-white py-4 mt-8">
+  <div class="container mx-auto text-center">
+    <span>All Rights Reserved 2020</span>
+  </div>
+</footer>
