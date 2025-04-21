@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Student } from '../../Classes/student';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../../Services/student.service';
 import { Router } from '@angular/router';
 import { DepartmentService } from '../../Services/department.service';
@@ -14,8 +14,8 @@ import { Department } from '../../Classes/department';
   export class AddstudComponent  implements OnInit {
 student: Student = new Student();
 departments: Department[] = [];
-  // regForm!: any;
-  regForm!: FormGroup;
+  regForm!: any;
+  // regForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private studentService: StudentService,
@@ -28,6 +28,15 @@ ngOnInit() {
     name: [this.student.name, Validators.required],
     age: [this.student.age, Validators.required],
     department: [this.student.department, Validators.required],
+
+
+    mobileNumbers: this.fb.array(
+      this.student.mobileNumbers  // this.student.mobileNumbers && this.student.mobileNumbers.length > 0
+        ? 
+        this.student.mobileNumbers.map(m => new FormControl(m.mobileNumber, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]))
+        :
+         [new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]{10}$/)])]
+    ),
     });
 
 
@@ -46,12 +55,12 @@ ngOnInit() {
  
 
   saveStudent() {
-    // const deptId = this.regForm.value.department;
+    
     this.student = { 
       ...this.regForm.value, 
-      // department: deptId ? { id: deptId } : null,
-      department: this.regForm.value.department ? { id: this.regForm.value.department } : null
-      
+      department: this.regForm.value.department ? { id: this.regForm.value.department } : null,
+    
+      mobileNumbers: this.regForm.value.mobileNumbers.map((num: string) => ({ mobileNumber: num })),
 
     };
   
@@ -83,9 +92,31 @@ getDepartments() {
 
 
 
+// Mobile Number
+addmore(){
+  this.regForm.get('mobileNumbers').push(
+    // new FormControl()
+    new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{10}$/)])
+   );
+}
 
+deleterow(val:any){
+  if (this.regForm.get('mobileNumbers').length > 1) {
+    this.regForm.get('mobileNumbers').removeAt(val);
+        
+      }
+  
+}
 
+// removeMobileNumber(index: number) {
+//   if (this.mobileNumbers.length > 1) {
+//     this.mobileNumbers.removeAt(index);
+    
+//   }
+// }
 
-
+// get mobileNumbers(): FormArray {
+//   return this.regForm.get('mobileNumbers') as FormArray;
+// }
 
 }

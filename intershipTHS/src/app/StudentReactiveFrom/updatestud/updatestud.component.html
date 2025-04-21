@@ -46,6 +46,28 @@
     
   </div>
      
+     
+        <!-- Mobile Numbers -->
+        <div class="mb-4" formArrayName="mobileNumbers">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Mobile Numbers</label>
+            <div *ngFor="let control of mobileNumbers.controls; let i = index; let last = last" class="mb-2">
+                <input type="text"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    [formControlName]="i" placeholder="Enter Mobile Number" />
+                <div *ngIf="control.touched && control.invalid" class="text-red-500 text-sm">
+                    Valid 10-digit mobile number required!
+                </div>
+  
+                <div class="flex items-center mt-2">
+                    <button (click)="removeMobileNumber(i)"type="button" class="bg-red-500 text-white px-3 py-1 rounded">
+                        Delete
+                    </button>
+                    <button *ngIf="last" type="button" (click)="addMobileNumber()" class="bg-green-500 text-white px-3 py-1 rounded ml-2">
+                        Add More
+                    </button>
+                </div>
+            </div>
+        </div>
   
         <!-- Buttons -->
         <div class="flex items-center justify-between">

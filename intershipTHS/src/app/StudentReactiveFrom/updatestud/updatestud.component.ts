@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../../Services/student.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Student } from '../../Classes/student';
@@ -31,6 +31,7 @@ export class UpdatestudComponent {
       name: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(1)]],
       department: [this.student.department, Validators.required],
+      mobileNumbers: this.fb.array([],Validators.required),
     });
 
     this.studentService.getStudentById(this.id).subscribe(data => {
@@ -44,6 +45,8 @@ export class UpdatestudComponent {
         department: this.student.department ? this.student.department.id : null
         
       });
+      // Populate mobile numbers
+      this.setMobileNumbers(this.student.mobileNumbers);
     });
     
     this.getDepartments();
@@ -62,7 +65,11 @@ export class UpdatestudComponent {
       // alert(JSON.stringify(this.student));
       const updatedStudent: Student = {
         ...formdata.value,
-        department: this.regForm.value.department ? { id: this.regForm.value.department } : null
+        department: this.regForm.value.department ? { id: this.regForm.value.department } : null,
+        mobileNumbers: formdata.value.mobileNumbers.map((num: string, index: number) => ({
+          id: this.student.mobileNumbers?.[index]?.id || null,
+          mobileNumber: num
+        })),
       };
       this.student = updatedStudent;
       this.studentService.updateStudent(this.id, this.student).subscribe(
@@ -93,6 +100,38 @@ getDepartments() {
 
 }
 
+//Mobile Number
+
+ // Getter for mobileNumbers FormArray
+ get mobileNumbers(): FormArray {
+  return this.regForm.get('mobileNumbers') as FormArray;
+}
+
+ // Populate mobile numbers in FormArray
+ setMobileNumbers(mobileNumbers: any[]) {
+  this.mobileNumbers.clear();
+
+  mobileNumbers.forEach(m => {
+    this.mobileNumbers.push(new FormControl(m.mobileNumber, [Validators.required, Validators.pattern(/^[0-9]{10}$/)]));
+  });
+
+  if (mobileNumbers.length === 0) {
+    this.mobileNumbers.push(new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]));
+  }
+}
+
+
+addMobileNumber() {
+  this.mobileNumbers.push(new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]));
+}
+
+
+removeMobileNumber(index: number) {
+  if (this.mobileNumbers.length > 1) {
+    this.mobileNumbers.removeAt(index);
+    
+  }
+}
 }
 
 

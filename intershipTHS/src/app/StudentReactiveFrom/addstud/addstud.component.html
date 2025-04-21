@@ -45,7 +45,7 @@
   
 
    <!-- Deparment -->
-   <div class="mb-6">
+   <div class="mb-4">
     <label class="block text-gray-700 text-sm font-bold mb-2" for="department">
       Department
     </label>
@@ -64,7 +64,44 @@
     
   </div>
 
-
+   <!--Mobile no  -->
+   <div class="mb-4" formArrayName="mobileNumbers">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="mobileNumber">
+      Mobile Number
+    </label>
+    <div *ngFor="let mobileNumber of regForm.get('mobileNumbers').controls; index as idx; let last = last" class="mb-4">
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="mobileNumber"
+        name="mobileNumber"
+        type="number"
+        [formControlName]="idx"
+        placeholder="Enter the Mobile Number"
+        />
+        <div *ngIf="
+        regForm.get('mobileNumbers').at(idx).touched &&
+        regForm.get('mobileNumbers').at(idx).hasError('pattern') " class="text-red-500 text-sm mt-1">
+        Valid 10-digit mobile number required!
+      </div>
+      <div class="flex items-center mt-4">
+        <button
+        type="button"
+         
+        class="bg-red-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline text-sm ml-2"
+          (click)="deleterow(idx)">
+          Delete
+        </button>
+        <button
+        type="button"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline text-sm ml-2"
+          (click)="addmore()"
+          *ngIf="last">
+          Add More..
+        </button>
+      </div>
+    </div>
+  </div>
+  
 
       <!-- button -->
       <div class="flex items-center justify-between">
