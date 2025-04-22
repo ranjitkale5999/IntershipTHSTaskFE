@@ -17,6 +17,7 @@
           <th class="py-2 px-4 border-r">Name</th>
           <th class="py-2 px-4 border-r">Age</th>
           <th class="py-2 px-4 border-r">Department</th>
+          <th class="py-2 px-4 border-r">Teachers</th>
           <th class="py-2 px-4 border-r">Mobile</th>
           <th class="py-2 px-4 border-r">Delete</th>
           <th class="py-2 px-4 border-r">Update</th>
@@ -38,6 +39,14 @@
             {{ student.department ? student.department.name : '' }}
 
           </td> 
+          <td class="py-2 px-4 border-r" style="text-align: center">
+            <!-- {{ student.teachers. }} -->
+            <span *ngFor="let num of student.teachers; let i = index">
+              {{ num.name }}<span *ngIf="i !== student.teachers.length - 1">, </span>
+            </span>
+
+          </td>
+          <!-- mobile number -->
           <td class="py-2 px-4 border-r" style="text-align: center">
             <span *ngFor="let num of student.mobileNumbers; let i = index">
               {{ num.mobileNumber }}

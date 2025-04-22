@@ -64,6 +64,30 @@
     
   </div>
 
+<!-- Teacher -->
+<div class="mb-6">
+  <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher">
+    Teachers
+  </label>
+
+  <ng-select
+    [items]="teachers"
+    bindLabel="name"
+    bindValue="id"
+    formControlName="teachers"
+    placeholder="Select teacher"
+    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    [multiple]="true"
+    required
+    >
+  </ng-select>
+ 
+  <p>
+    <!-- Selected teacher IDs: {{ regForm.get('teachers')?.value | json }} -->
+</p>
+  <!-- <div style="margin-top:100px"></div> -->
+</div> 
+
    <!--Mobile no  -->
    <div class="mb-4" formArrayName="mobileNumbers">
     <label class="block text-gray-700 text-sm font-bold mb-2" for="mobileNumber">

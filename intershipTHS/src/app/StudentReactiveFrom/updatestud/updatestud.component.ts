@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Student } from '../../Classes/student';
 import { Department } from '../../Classes/department';
 import { DepartmentService } from '../../Services/department.service';
+import { Teacher } from '../../Classes/teacher';
+import { TeacherService } from '../../Services/teacher.service';
 
 @Component({
   selector: 'app-updatestud',
@@ -16,12 +18,14 @@ export class UpdatestudComponent {
   regForm!: FormGroup;
   student: Student = new Student();
   departments: Department[] = [];
+  teachers:Teacher[]=[];
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private studentService: StudentService,
     private departmentService: DepartmentService,
     private route: ActivatedRoute,
+    private teacherService:TeacherService,
     private fb: FormBuilder
   ) { }
   ngOnInit() {
@@ -32,6 +36,8 @@ export class UpdatestudComponent {
       age: ['', [Validators.required, Validators.min(1)]],
       department: [this.student.department, Validators.required],
       mobileNumbers: this.fb.array([],Validators.required),
+      // teachers: this.fb.array([], Validators.required),
+      teachers: [[], Validators.required]
     });
 
     this.studentService.getStudentById(this.id).subscribe(data => {
@@ -41,15 +47,16 @@ export class UpdatestudComponent {
         id: this.student.id,
         name: this.student.name,
         age: this.student.age,
-        // department: this.student.department.id,
-        department: this.student.department ? this.student.department.id : null
-        
+        department: this.student.department ? this.student.department.id : null,
+        teachers: this.student.teachers?.map(t => t.id) || []
       });
       // Populate mobile numbers
       this.setMobileNumbers(this.student.mobileNumbers);
+
     });
     
     this.getDepartments();
+    this.getTeachers();
   }
 
   reset() {
@@ -70,6 +77,7 @@ export class UpdatestudComponent {
           id: this.student.mobileNumbers?.[index]?.id || null,
           mobileNumber: num
         })),
+        teachers: this.regForm.value.teachers ?.map((id: number) => ({ id })) || [],
       };
       this.student = updatedStudent;
       this.studentService.updateStudent(this.id, this.student).subscribe(
@@ -132,6 +140,18 @@ removeMobileNumber(index: number) {
     
   }
 }
+
+
+// Teacher
+
+getTeachers() {
+
+  this.teacherService.getTeacherList().subscribe(data => {
+    console.log("Teacher List",data)
+    this.teachers=data;
+  })
+}
+
 }
 
 

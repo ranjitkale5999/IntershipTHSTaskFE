@@ -1,5 +1,6 @@
 import { Department } from "./department";
 import { MobileNumber } from "./mobile-number";
+import { Teacher } from "./teacher";
 
 export class Student {
     "id": number;
@@ -7,4 +8,5 @@ export class Student {
   "age": number;
   "department": Department;
   "mobileNumbers":MobileNumber[];
+  "teachers":Teacher[];
 }

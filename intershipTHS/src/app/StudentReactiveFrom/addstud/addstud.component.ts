@@ -5,6 +5,8 @@ import { StudentService } from '../../Services/student.service';
 import { Router } from '@angular/router';
 import { DepartmentService } from '../../Services/department.service';
 import { Department } from '../../Classes/department';
+import { TeacherService } from '../../Services/teacher.service';
+import { Teacher } from '../../Classes/teacher';
 
 @Component({
   selector: 'app-addstud',
@@ -14,12 +16,15 @@ import { Department } from '../../Classes/department';
   export class AddstudComponent  implements OnInit {
 student: Student = new Student();
 departments: Department[] = [];
+teachers:Teacher[]=[];
+
   regForm!: any;
   // regForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private studentService: StudentService,
     private departmentService: DepartmentService,
+    private teacherService:TeacherService,
     private router: Router,
   ) {}
 ngOnInit() {
@@ -37,11 +42,14 @@ ngOnInit() {
         :
          [new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]{10}$/)])]
     ),
+    
+    teachers: [[], Validators.required],
     });
 
 
 
     this.getDepartments();
+    this.getTeachers();
   }
 
 
@@ -61,9 +69,9 @@ ngOnInit() {
       department: this.regForm.value.department ? { id: this.regForm.value.department } : null,
     
       mobileNumbers: this.regForm.value.mobileNumbers.map((num: string) => ({ mobileNumber: num })),
-
+      teachers: this.regForm.value.teachers ?.map((id: number) => ({ id })) || []
     };
-  
+    
     console.log('Payload:', this.student);
     // alert(JSON.stringify(this.student));
     this.studentService.createStudent(this.student).subscribe(data => {
@@ -108,15 +116,21 @@ deleterow(val:any){
   
 }
 
-// removeMobileNumber(index: number) {
-//   if (this.mobileNumbers.length > 1) {
-//     this.mobileNumbers.removeAt(index);
-    
-//   }
-// }
+
 
 // get mobileNumbers(): FormArray {
 //   return this.regForm.get('mobileNumbers') as FormArray;
 // }
+
+// teacher
+
+getTeachers() {
+
+  this.teacherService.getTeacherList().subscribe(data => {
+    console.log("Teacher List",data)
+    this.teachers=data;
+  })
+}
+
 
 }
