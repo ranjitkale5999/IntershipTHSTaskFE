@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Student } from '../Classes/student';
+import { ApiResponse } from '../Interfaces/api-response';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,14 @@ export class StudentService {
     return this.httpClient.put<Student>(`${this.baseUrl}/${id}`,student)
    }
 
+   getStudentsByCriteria(area?: string, city?: string): Observable<ApiResponse<Student[]>> {
+    let params = new HttpParams();
+  
+    if (area) params = params.set('area', area);
+    if (city) params = params.set('city', city);
+  
+    return this.httpClient.get<ApiResponse<Student[]>>(`${this.baseUrl}/criteria`, { params });
+  }
   }
 
 

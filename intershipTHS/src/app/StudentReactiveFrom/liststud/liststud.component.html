@@ -8,6 +8,53 @@
       Add Student
     </button>
   </div>
+
+<!-- Search area and city Start -->
+<form [formGroup]="formsearch" (ngSubmit)="searchCA(formsearch)">
+  <!-- Area -->
+  <div class="mb-6">
+    <label class="block text-gray-700 text-sm font-bold mb-2">Area</label>
+    <ng-select
+      [items]="uniqueAreas"
+      formControlName="area"
+      placeholder="Select Area"
+      class="shadow border rounded w-full py-2 px-3"
+      [searchable]="true">
+    </ng-select>
+  </div>
+
+  <!-- City -->
+  <div class="mb-6">
+    <label class="block text-gray-700 text-sm font-bold mb-2">City</label>
+    <ng-select
+      [items]="uniqueCities"
+      formControlName="city"
+      placeholder="Select City"
+      class="shadow border rounded w-full py-2 px-3"
+      [searchable]="true">
+    </ng-select>
+  </div>
+
+  <!-- Validation Message -->
+  <div *ngIf="formsearch.errors?.['atLeastOne'] && (formsearch.touched || formsearch.dirty)" class="text-red-500 text-sm mb-4">
+    Please select at least Area or City.
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex items-center justify-between">
+    <button type="submit" [disabled]="formsearch.invalid"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+      Submit
+    </button>
+    <button type="button" (click)="resetSearch()"
+      class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+      Reset
+    </button>
+  </div>
+</form>
+<!-- Search area and city End -->
+
+<!-- Table print Start -->
   <div>
     <table class="min-w-full bg-white border border-gray-200">
 
@@ -76,4 +123,5 @@
       </tbody>
     </table>
   </div>
+  <!-- Table print End -->
 </div>
