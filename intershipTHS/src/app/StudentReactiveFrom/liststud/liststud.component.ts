@@ -3,6 +3,8 @@ import { StudentService } from '../../Services/student.service';
 import { FormBuilder } from '@angular/forms';
 import { Student } from '../../Classes/student';
 import { Router } from '@angular/router';
+import { Address } from '../../Classes/address';
+import { AddressService } from '../../Services/address.service';
 
 @Component({
   selector: 'app-liststud',
@@ -11,7 +13,9 @@ import { Router } from '@angular/router';
 })
 export class ListstudComponent  implements OnInit{
   students: Student[] = [];
+  addresses: Address[] = [];
   constructor(private studentService: StudentService,
+    private addressService: AddressService,
     private fb: FormBuilder,
     private router: Router,
   ) { }

@@ -89,6 +89,80 @@
             </div>
         </div>
   
+
+
+                <!-- Addresses -->
+<div class="mb-4" formArrayName="addresses">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+      Addresses
+    </label>
+  
+    <div *ngFor="let address of addresses.controls;
+     let idx = index; let last = last" [formGroupName]="idx" class="mb-4 border p-4 rounded-lg shadow">
+  
+      <!-- Area -->
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="Area">
+        Area
+      </label>
+      <input
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="text"
+        formControlName="area"
+        placeholder="Enter Area"
+      />
+      <div *ngIf="address.get('area')?.touched && address.get('area')?.invalid" class="text-red-500 text-sm">
+        Area is required
+      </div>
+  
+      <!-- City -->
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="City">
+        City
+      </label>
+      <input
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="text"
+        formControlName="city"
+        placeholder="Enter City"
+      />
+      <div *ngIf="address.get('city')?.touched && address.get('city')?.invalid" class="text-red-500 text-sm">
+        City is required
+      </div>
+  
+      <!-- Pincode -->
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="Pincode">
+        Pincode
+      </label>
+      <input
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="text"
+        formControlName="pincode"
+        placeholder="Enter Pincode"
+      />
+      <div *ngIf="address.get('pincode')?.touched && address.get('pincode')?.invalid" class="text-red-500 text-sm">
+        Valid 6-digit Pincode is required
+      </div>
+  
+      <!-- Buttons -->
+      <div class="flex items-center mt-4">
+        <button
+          type="button"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-sm"
+          (click)="deleteAddress(idx)"
+        >
+          Delete
+        </button>
+  
+        <button
+          type="button"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded text-sm ml-2"
+          (click)="addAddress()"
+          *ngIf="last"
+        >
+          Add More
+        </button>
+      </div>
+    </div>
+  </div>
         <!-- Buttons -->
         <div class="flex items-center justify-between">
             <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

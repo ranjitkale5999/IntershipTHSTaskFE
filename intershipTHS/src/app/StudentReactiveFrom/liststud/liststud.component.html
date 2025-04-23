@@ -19,6 +19,7 @@
           <th class="py-2 px-4 border-r">Department</th>
           <th class="py-2 px-4 border-r">Teachers</th>
           <th class="py-2 px-4 border-r">Mobile</th>
+          <th class="py-2 px-4 border-r">Address</th>
           <th class="py-2 px-4 border-r">Delete</th>
           <th class="py-2 px-4 border-r">Update</th>
         </tr>
@@ -51,6 +52,12 @@
             <span *ngFor="let num of student.mobileNumbers; let i = index">
               {{ num.mobileNumber }}
               <span *ngIf="i !== student.mobileNumbers.length - 1">, </span>
+            </span>
+          </td>
+          <td class="py-2 px-4 border-r" style="text-align: center">
+            <span *ngFor="let add of student.addresses; let i = index">
+              {{ add.area }},{{ add.city }},{{add.pincode }}
+              <span *ngIf="i !== student.addresses.length - 1">, </span>
             </span>
           </td>
           <td class="py-2 px-4 border-r" style="text-align: center">

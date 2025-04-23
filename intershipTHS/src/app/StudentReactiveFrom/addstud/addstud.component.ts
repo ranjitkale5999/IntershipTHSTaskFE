@@ -33,8 +33,6 @@ ngOnInit() {
     name: [this.student.name, Validators.required],
     age: [this.student.age, Validators.required],
     department: [this.student.department, Validators.required],
-
-
     mobileNumbers: this.fb.array(
       this.student.mobileNumbers  // this.student.mobileNumbers && this.student.mobileNumbers.length > 0
         ? 
@@ -42,6 +40,16 @@ ngOnInit() {
         :
          [new FormControl(null, [Validators.required, Validators.pattern(/^[0-9]{10}$/)])]
     ),
+    addresses: this.fb.array([
+      this.fb.group({
+        area: ['', Validators.required],
+        city: ['', Validators.required],
+        pincode: [null, [  
+          Validators.required,
+          Validators.pattern(/^[0-9]{6}$/)
+        ]]
+      })
+    ]),
     
     teachers: [[], Validators.required],
     });
@@ -132,5 +140,21 @@ getTeachers() {
   })
 }
 
+// address
+deleteAddress(val:any){
+  this.regForm.get('addresses').removeAt(val);
+}
+
+addAddress() {
+  const addressForm = this.fb.group({
+    area: ['', Validators.required],
+    city: ['', Validators.required],
+    pincode: [null, [
+      Validators.required,
+      Validators.pattern(/^[0-9]{6}$/)
+    ]]
+  });
+  (this.regForm.get('addresses') as FormArray).push(addressForm);
+}
 
 }

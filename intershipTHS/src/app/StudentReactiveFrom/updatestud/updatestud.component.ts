@@ -37,6 +37,16 @@ export class UpdatestudComponent {
       department: [this.student.department, Validators.required],
       mobileNumbers: this.fb.array([],Validators.required),
       // teachers: this.fb.array([], Validators.required),
+      addresses: this.fb.array([
+        this.fb.group({
+          area: ['', Validators.required],
+          city: ['', Validators.required],
+          pincode: [null, [  
+            Validators.required,
+            Validators.pattern(/^[0-9]{6}$/)
+          ]]
+        })
+      ]),
       teachers: [[], Validators.required]
     });
 
@@ -52,6 +62,8 @@ export class UpdatestudComponent {
       });
       // Populate mobile numbers
       this.setMobileNumbers(this.student.mobileNumbers);
+
+      this.setAddresses(this.student.addresses);
 
     });
     
@@ -152,6 +164,54 @@ getTeachers() {
   })
 }
 
+// address
+deleteAddress(val:any){
+  if(this.addresses.length > 1) {
+    this.addresses.removeAt(val);
+ 
+}
 }
 
+addAddress() {
+  const addressForm = this.fb.group({
+    area: ['', Validators.required],
+    city: ['', Validators.required],
+    pincode: [null, [
+      Validators.required,
+      Validators.pattern(/^[0-9]{6}$/)
+    ]]
+  });
+  (this.regForm.get('addresses') as FormArray).push(addressForm);
+}
 
+get addresses (): FormArray {
+  return this.regForm.get('addresses') as FormArray;
+}
+
+setAddresses(addresses: any[]) {
+  this.addresses.clear();
+
+  addresses.forEach(a => {
+    this.addresses.push(this.fb.group({
+      area: [a.area, Validators.required],
+      city: [a.city, Validators.required],
+      pincode: [a.pincode, [
+        Validators.required,
+        Validators.pattern(/^[0-9]{6}$/)
+      ]]
+    }));
+  });
+  if (addresses.length === 0) {
+    this.addresses.push(this.fb.group({
+      area: ['', Validators.required],
+      city: ['', Validators.required],
+      pincode: [null, [
+        Validators.required,
+        Validators.pattern(/^[0-9]{6}$/)
+      ]]
+    }));   
+  }
+
+}
+
+}
