@@ -160,7 +160,7 @@ getTeachers() {
 
   this.teacherService.getTeacherList().subscribe(data => {
     console.log("Teacher List",data)
-    this.teachers=data;
+    this.teachers=data.data;
   })
 }
 
