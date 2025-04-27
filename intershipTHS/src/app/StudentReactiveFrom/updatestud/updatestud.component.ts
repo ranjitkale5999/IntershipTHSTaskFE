@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StudentService } from '../../Services/student.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,13 +7,14 @@ import { Department } from '../../Classes/department';
 import { DepartmentService } from '../../Services/department.service';
 import { Teacher } from '../../Classes/teacher';
 import { TeacherService } from '../../Services/teacher.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-updatestud',
   templateUrl: './updatestud.component.html',
   styleUrl: './updatestud.component.css'
 })
-export class UpdatestudComponent {
+export class UpdatestudComponent implements OnInit{
   id: number = 0;
   regForm!: FormGroup;
   student: Student = new Student();
@@ -26,10 +27,14 @@ export class UpdatestudComponent {
     private departmentService: DepartmentService,
     private route: ActivatedRoute,
     private teacherService:TeacherService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<UpdatestudComponent>,   // ✅ Inject DialogRef
+    @Inject(MAT_DIALOG_DATA) public data: { id: number }
   ) { }
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
+    // this.id = this.route.snapshot.params['id'];
+    this.id = this.data.id; 
+
     this.regForm = this.fb.group({
       id: ['', Validators.required],
       name: ['', Validators.required],
@@ -105,7 +110,10 @@ export class UpdatestudComponent {
     }
   }
   goToStudent() {
-    this.router.navigate(['/home']);
+    this.dialogRef.close();
+    this.router.navigate(['/home']).then(() => {
+      window.location.reload();
+    });
   }
 
   

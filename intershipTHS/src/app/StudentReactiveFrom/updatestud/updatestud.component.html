@@ -1,179 +1,163 @@
-<div class="container mx-auto p-4">
-    <form [formGroup]="regForm" (ngSubmit)="update(regForm)"
-        class="max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        
-        <!-- Name -->
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
-                Name
-            </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="name" name="name" type="text" formControlName="name" placeholder="Enter the Name" />
-            <div *ngIf="regForm.get('name')?.touched && regForm.get('name')?.invalid" class="text-red-500 text-sm">
-                Name is required !!
-            </div>
+<div class="container mx-auto ">
+  <form [formGroup]="regForm" (ngSubmit)="update(regForm)"
+    class="max-w-full mx-auto bg-white shadow-md rounded pt-6 pb-8  mb-4 px-4">
+    <div class="flex gap-4">
+      <!-- Name -->
+      <div class="mb-4 flex-1">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+          Name
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="name" name="name" type="text" formControlName="name" placeholder="Enter the Name" />
+        <div *ngIf="regForm.get('name')?.touched && regForm.get('name')?.invalid" class="text-red-500 text-sm">
+          Name is required !!
         </div>
-  
-        <!-- Age -->
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="age">
-                Age
-            </label>
-            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="age" name="age" type="number" formControlName="age" placeholder="Enter the Age" />
-            <div *ngIf="regForm.get('age')?.touched && regForm.get('age')?.invalid" class="text-red-500 text-sm">
-                Age is required !!
-            </div>
+      </div>
+
+      <!-- Age -->
+      <div class="mb-4 flex-1">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="age">
+          Age
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="age" name="age" type="number" formControlName="age" placeholder="Enter the Age" />
+        <div *ngIf="regForm.get('age')?.touched && regForm.get('age')?.invalid" class="text-red-500 text-sm">
+          Age is required !!
         </div>
-  
-         <!-- Deparment -->
-   <div class="mb-6">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="department">
-      Department
-    </label>
-
-    <ng-select
-      [items]="departments"
-      bindLabel="name"
-      bindValue="id"
-      formControlName="department"
-      placeholder="Select Department"
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      required
-      
-      >
-    </ng-select>
-    
-  </div>
-     <!-- Teacher -->
-  <div class="mb-6">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher">
-      Teachers
-    </label>
-
-    <ng-select
-      [items]="teachers"
-      bindLabel="name"
-      bindValue="id"
-      formControlName="teachers"
-      placeholder="Select teacher"
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      [multiple]="true"
-      required
-      >
-    </ng-select>
-   
-
-    <!-- <div style="margin-top:100px"></div> -->
-  </div> 
-     
-        <!-- Mobile Numbers -->
-        <div class="mb-4" formArrayName="mobileNumbers">
-            <label class="block text-gray-700 text-sm font-bold mb-2">Mobile Numbers</label>
-            <div *ngFor="let control of mobileNumbers.controls; let i = index; let last = last" class="mb-2">
-                <input type="text"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    [formControlName]="i" placeholder="Enter Mobile Number" />
-                <div *ngIf="control.touched && control.invalid" class="text-red-500 text-sm">
-                    Valid 10-digit mobile number required!
-                </div>
-  
-                <div class="flex items-center mt-2">
-                    <button (click)="removeMobileNumber(i)"type="button" class="bg-red-500 text-white px-3 py-1 rounded">
-                        Delete
-                    </button>
-                    <button *ngIf="last" type="button" (click)="addMobileNumber()" class="bg-green-500 text-white px-3 py-1 rounded ml-2">
-                        Add More
-                    </button>
-                </div>
-            </div>
-        </div>
-  
-
-
-                <!-- Addresses -->
-<div class="mb-4" formArrayName="addresses">
-    <label class="block text-gray-700 text-sm font-bold mb-2">
-      Addresses
-    </label>
-  
-    <div *ngFor="let address of addresses.controls;
-     let idx = index; let last = last" [formGroupName]="idx" class="mb-4 border p-4 rounded-lg shadow">
-  
-      <!-- Area -->
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="Area">
-        Area
-      </label>
-      <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        type="text"
-        formControlName="area"
-        placeholder="Enter Area"
-      />
-      <div *ngIf="address.get('area')?.touched && address.get('area')?.invalid" class="text-red-500 text-sm">
-        Area is required
-      </div>
-  
-      <!-- City -->
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="City">
-        City
-      </label>
-      <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        type="text"
-        formControlName="city"
-        placeholder="Enter City"
-      />
-      <div *ngIf="address.get('city')?.touched && address.get('city')?.invalid" class="text-red-500 text-sm">
-        City is required
-      </div>
-  
-      <!-- Pincode -->
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="Pincode">
-        Pincode
-      </label>
-      <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        type="text"
-        formControlName="pincode"
-        placeholder="Enter Pincode"
-      />
-      <div *ngIf="address.get('pincode')?.touched && address.get('pincode')?.invalid" class="text-red-500 text-sm">
-        Valid 6-digit Pincode is required
-      </div>
-  
-      <!-- Buttons -->
-      <div class="flex items-center mt-4">
-        <button
-          type="button"
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-sm"
-          (click)="deleteAddress(idx)"
-        >
-          Delete
-        </button>
-  
-        <button
-          type="button"
-          class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded text-sm ml-2"
-          (click)="addAddress()"
-          *ngIf="last"
-        >
-          Add More
-        </button>
       </div>
     </div>
-  </div>
-        <!-- Buttons -->
-        <div class="flex items-center justify-between">
-            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit">
-                Submit
-            </button>
-            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                (click)="reset()">
-                Reset
-            </button>
+    <div class="flex gap-4">
+      <!-- Deparment -->
+      <div class="mb-6 flex-1">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="department">
+          Department
+        </label>
+
+        <ng-select [items]="departments" bindLabel="name" bindValue="id" formControlName="department"
+          placeholder="Select Department"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          required>
+        </ng-select>
+
+      </div>
+      <!-- Teacher -->
+      <div class="mb-6 flex-1">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="teacher">
+          Teachers
+        </label>
+
+        <ng-select [items]="teachers" bindLabel="name" bindValue="id" formControlName="teachers"
+          placeholder="Select teacher"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [multiple]="true" required>
+        </ng-select>
+
+
+        <!-- <div style="margin-top:100px"></div> -->
+      </div>
+    </div>
+
+
+    <!-- Mobile Numbers -->
+    <div class="mb-4" formArrayName="mobileNumbers">
+      <label class="block text-gray-700 text-sm font-bold mb-2">Mobile Numbers</label>
+      <div *ngFor="let control of mobileNumbers.controls; let i = index; let last = last" class="mb-2">
+        <input type="text"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          [formControlName]="i" placeholder="Enter Mobile Number" />
+        <div *ngIf="control.touched && control.invalid" class="text-red-500 text-sm">
+          Valid 10-digit mobile number required!
         </div>
-    </form>
-  </div>
-  
+
+        <div class="flex items-center mt-2">
+          <button (click)="removeMobileNumber(i)" type="button" class="bg-red-500 text-white px-3 py-1 rounded">
+            Delete
+          </button>
+          <button *ngIf="last" type="button" (click)="addMobileNumber()"
+            class="bg-green-500 text-white px-3 py-1 rounded ml-2">
+            Add More
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Addresses -->
+    <div class="mb-4" formArrayName="addresses">
+      <label class="block text-gray-700 text-sm font-bold mb-2">
+        Addresses
+      </label>
+
+      <div *ngFor="let address of addresses.controls;
+     let idx = index; let last = last" [formGroupName]="idx" class="mb-4 border p-4 rounded-lg shadow">
+
+        <!-- Area -->
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="Area">
+          Area
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text" formControlName="area" placeholder="Enter Area" />
+        <div *ngIf="address.get('area')?.touched && address.get('area')?.invalid" class="text-red-500 text-sm">
+          Area is required
+        </div>
+
+        <!-- City -->
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="City">
+          City
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text" formControlName="city" placeholder="Enter City" />
+        <div *ngIf="address.get('city')?.touched && address.get('city')?.invalid" class="text-red-500 text-sm">
+          City is required
+        </div>
+
+        <!-- Pincode -->
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="Pincode">
+          Pincode
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text" formControlName="pincode" placeholder="Enter Pincode" />
+        <div *ngIf="address.get('pincode')?.touched && address.get('pincode')?.invalid" class="text-red-500 text-sm">
+          Valid 6-digit Pincode is required
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex items-center mt-4">
+          <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-sm"
+            (click)="deleteAddress(idx)">
+            Delete
+          </button>
+
+          <button type="button"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded text-sm ml-2"
+            (click)="addAddress()" *ngIf="last">
+            Add More
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Buttons -->
+    <div class="flex items-center justify-between">
+      <button
+        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit">
+        Submit
+      </button>
+      <button
+        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        (click)="reset()">
+        Reset
+      </button><button
+        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        (click)="goToStudent()">
+        Close
+      </button>
+    </div>
+  </form>
+</div>

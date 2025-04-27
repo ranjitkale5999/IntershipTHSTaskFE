@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Student } from '../../Classes/student';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { StudentService } from '../../Services/student.service';
 import { Router } from '@angular/router';
 import { DepartmentService } from '../../Services/department.service';
 import { Department } from '../../Classes/department';
 import { TeacherService } from '../../Services/teacher.service';
 import { Teacher } from '../../Classes/teacher';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-addstud',
@@ -26,10 +27,12 @@ teachers:Teacher[]=[];
     private departmentService: DepartmentService,
     private teacherService:TeacherService,
     private router: Router,
+    @Inject(MAT_DIALOG_DATA) data: { message: string },
+    public dialogRef: MatDialogRef<AddstudComponent>
   ) {}
 ngOnInit() {
   this.regForm = this.fb.group({
-    id: [this.student.id, Validators.required],
+    id: [this.student.id,],
     name: [this.student.name, Validators.required],
     age: [this.student.age, Validators.required],
     department: [this.student.department, Validators.required],
@@ -63,10 +66,15 @@ ngOnInit() {
 
   register(formdata: FormGroup) {
 
-    console.log( "form Data in register:-",formdata.value); 
-    console.log(formdata.valid);
+    // console.log( "form Data in register:-",formdata.value); 
+    // console.log(formdata.valid);
 
-    this.saveStudent();
+    if (formdata.valid) {
+      this.saveStudent();
+      // this.dialogRef.close('success');  
+    } else {
+      console.log("Form is invalid!");
+    }
   }
  
 
@@ -90,9 +98,13 @@ ngOnInit() {
     });
   }
 
+  
 
   goToStudent() {
-    this.router.navigate(['/home']);
+    this.dialogRef.close();
+    this.router.navigate(['/home']).then(() => {
+      window.location.reload();
+    });
   }
 
 
@@ -125,17 +137,12 @@ deleterow(val:any){
 }
 
 
-
-// get mobileNumbers(): FormArray {
-//   return this.regForm.get('mobileNumbers') as FormArray;
-// }
-
 // teacher
 
 getTeachers() {
 
   this.teacherService.getTeacherList().subscribe(data => {
-    console.log("Teacher List",data)
+    // console.log("Teacher List",data)
     this.teachers=data.data;
   })
 }
@@ -157,4 +164,7 @@ addAddress() {
   (this.regForm.get('addresses') as FormArray).push(addressForm);
 }
 
+
+
+// 
 }

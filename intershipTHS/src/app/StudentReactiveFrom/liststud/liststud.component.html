@@ -4,10 +4,17 @@
   <div>
     <p class="text-xl font-bold mb-4">Student List Using Reactive Form</p>
 
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" routerLink="/r-addstud">
+    <!-- <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" routerLink="/r-addstud">
       Add Student
-    </button>
-  </div>
+    </button> -->
+    <section class="mat-button-container">
+      
+      
+        <button mat-raised-button color="primary" (click)="showPrompt()">
+          Add Student
+        </button>
+    
+    </section>
 
 <!-- Search area and city Start -->
 <form [formGroup]="formsearch" (ngSubmit)="searchCA(formsearch)">
@@ -108,15 +115,18 @@
             </span>
           </td>
           <td class="py-2 px-4 border-r" style="text-align: center">
-            <button (click)="delete(student.id)"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+            <button mat-raised-button color="warn" (click)="delete(student.id)"
+            >
               Delete
             </button>
           </td>
           <td class="py-2 px-4 border-r" style="text-align: center">
-            <button (click)="update(student.id)"
+            <!-- <button (click)="update(student.id)"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 border-r"
               style="text-align: center">
+              Update
+            </button> -->
+            <button mat-raised-button color="primary" (click)="update(student.id)">
               Update
             </button>
         </tr>

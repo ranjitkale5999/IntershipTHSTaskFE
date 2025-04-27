@@ -5,6 +5,9 @@ import { Student } from '../../Classes/student';
 import { Router } from '@angular/router';
 import { Address } from '../../Classes/address';
 import { AddressService } from '../../Services/address.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AddstudComponent } from '../addstud/addstud.component';
+import { UpdatestudComponent } from '../updatestud/updatestud.component';
 
 @Component({
   selector: 'app-liststud',
@@ -19,6 +22,7 @@ export class ListstudComponent  implements OnInit{
     private addressService: AddressService,
     private fb: FormBuilder,
     private router: Router,
+    private dialog: MatDialog,
   ) { }
 ngOnInit(): void {
   this.formsearch = this.fb.group({
@@ -33,7 +37,7 @@ ngOnInit(): void {
 getStudentList() {
   this.studentService.getStudentList().subscribe(
     (response) => {
-      console.log('Student list:', response);
+      // console.log('Student list:', response);
       this.students = response;
     },
     (error) => {
@@ -50,7 +54,16 @@ delete(id: number) {
 }
 
 update(id: number) {
-  this.router.navigate(['studUpdate', id]);
+  const dialogRef = this.dialog.open(UpdatestudComponent, {
+    
+    width:'50%',
+    height: 'auto',
+    enterAnimationDuration: '500ms',
+    exitAnimationDuration: '900ms',
+    data: { id: id }, // 👈 pass id to dialog
+  });
+    this.router.navigate(['studUpdate', id]);
+  
 }
 
  // Address List
@@ -58,7 +71,7 @@ update(id: number) {
  uniqueCities: string[] = [];
  getAddress() {
    this.addressService.getAddressList().subscribe((data) => {
-     console.log("Address List :-", data);
+    //  console.log("Address List :-", data);
      this.addresses = data;
      this.uniqueAreas = [...new Set(data.map(a => a.area))];
      this.uniqueCities = [...new Set(data.map(a => a.city))];
@@ -101,5 +114,16 @@ onlyOneFieldValidator(): ValidatorFn {
 
 }
 
+showPrompt(): void {
+  const dialogRef = this.dialog.open(AddstudComponent, {
+    width:'50%',
+    height: '100%',
+    enterAnimationDuration: '500ms', 
+      exitAnimationDuration: '900ms',
+  });
+}
 
+
+
+// 
 }

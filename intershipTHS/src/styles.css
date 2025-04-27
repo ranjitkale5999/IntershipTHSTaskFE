@@ -1,5 +1,15 @@
+/* ✅ All @import rules MUST come first */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 @import "@ng-select/ng-select/themes/default.theme.css";
-/* You can add global styles to this file, and also import other style files */
+
+/* ✅ Now Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ✅ Custom global styles below */
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

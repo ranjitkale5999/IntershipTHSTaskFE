@@ -9,6 +9,9 @@ import { ListstudComponent } from './StudentReactiveFrom/liststud/liststud.compo
 import { HttpClientModule } from '@angular/common/http';
 import { UpdatestudComponent } from './StudentReactiveFrom/updatestud/updatestud.component';
 import {NgSelectModule }  from '@ng-select/ng-select';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,8 +25,12 @@ import {NgSelectModule }  from '@ng-select/ng-select';
     ReactiveFormsModule ,
     HttpClientModule, 
     NgSelectModule ,
+    MatDialogModule,
+    MatButtonModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
