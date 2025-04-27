@@ -79,7 +79,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let student of students" class="border-b hover:bg-gray-50">
+        <tr *ngFor="let student of pagedStudents" class="border-b hover:bg-gray-50">
+        <!-- <tr *ngFor="let student of students" class="border-b hover:bg-gray-50"> -->
           <td class="py-2 px-4 border-r" style="text-align: center">
             {{ student.id }}
           </td>
@@ -132,6 +133,13 @@
         </tr>
       </tbody>
     </table>
+  <!-- Paginator -->
+  <mat-paginator
+    [length]="totalStudents"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
   </div>
   <!-- Table print End -->
 </div>

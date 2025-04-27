@@ -12,6 +12,7 @@ import {NgSelectModule }  from '@ng-select/ng-select';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +28,7 @@ import { MatButtonModule } from '@angular/material/button';
     NgSelectModule ,
     MatDialogModule,
     MatButtonModule,
+    MatPaginatorModule
   ],
   providers: [
     provideAnimationsAsync()
